@@ -11,13 +11,31 @@ const TaskForm = (props) => {
     typeButton,
     titleButton,
     classButton,
+    onTaskInput,
+    onTaskClick,
+    onSubmit,
   } = props;
 
+  const handleSubmit = (event) => {
+    event.preventDefault();
+    onSubmit?.();
+  };
+
   return (
-    <form className="todo__form">
-      <Field className={classInput} id={id} label={label} type={typeInput} />
+    <form className="todo__form" onSubmit={handleSubmit}>
+      <Field
+        className={classInput}
+        id={id}
+        label={label}
+        type={typeInput}
+        onTaskInput={onTaskInput}
+      />
       {hasButton && (
-        <Button className={classButton} type={typeButton}>
+        <Button
+          className={classButton}
+          type={typeButton}
+          onButtonClick={onTaskClick}
+        >
           {titleButton}
         </Button>
       )}

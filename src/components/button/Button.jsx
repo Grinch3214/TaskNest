@@ -6,11 +6,17 @@ const Button = (props) => {
     type = 'button',
     children = 'Button',
     hasIcon = false,
+    onButtonClick,
     ...rest
   } = props;
 
   return (
-    <button {...rest} className={`button ${className}`} type={type}>
+    <button
+      {...rest}
+      className={`button ${className}`}
+      type={type}
+      onClick={onButtonClick}
+    >
       {!hasIcon ? children : <IconClose />}
     </button>
   );

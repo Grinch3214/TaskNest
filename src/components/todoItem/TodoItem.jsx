@@ -1,7 +1,14 @@
 import Button from '../button/Button';
 
 const TodoItem = (props) => {
-  const { className = '', title, isDone, id } = props;
+  const {
+    className = '',
+    title,
+    isDone,
+    id,
+    onButtonClick,
+    onTaskCompleteChange,
+  } = props;
 
   return (
     <li className={`todo-item ${className}`}>
@@ -10,6 +17,7 @@ const TodoItem = (props) => {
         id={id}
         type="checkbox"
         checked={isDone}
+        onChange={(event) => onTaskCompleteChange(id, event.target.checked)}
       />
       <label className="todo-item__label" htmlFor={id}>
         {title}
@@ -19,6 +27,7 @@ const TodoItem = (props) => {
         className="todo-item__delete-button"
         aria-label="Delete"
         title="Delete"
+        onButtonClick={() => onButtonClick(id)}
       />
     </li>
   );
