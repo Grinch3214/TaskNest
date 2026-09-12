@@ -1,5 +1,5 @@
 const Field = (props) => {
-  const { className = '', id, label, type = 'text', onTaskInput } = props;
+  const { className = '', id, label, type = 'text', value, onChange } = props;
 
   return (
     <div className={`field ${className}`}>
@@ -12,7 +12,8 @@ const Field = (props) => {
         placeholder=" "
         autoComplete="off"
         type={type}
-        onInput={(event) => onTaskInput(event.target.value)}
+        value={value}
+        onInput={(event) => onChange?.(event.target.value)}
       />
     </div>
   );
