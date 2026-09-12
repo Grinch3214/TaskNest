@@ -1,16 +1,17 @@
 import TodoItem from '../todoItem/TodoItem';
 
-const TodoList = () => {
-  const hasTask = true;
+const TodoList = (props) => {
+  const { tasks = [] } = props;
 
-  if (!hasTask) {
+  if (!tasks.length) {
     return <div className="todo__empty-message"></div>;
   }
 
   return (
     <ul className="todo__list">
-      <TodoItem />
-      <TodoItem />
+      {tasks.map((task) => (
+        <TodoItem key={task.id} {...task} className="todo__item" />
+      ))}
     </ul>
   );
 };
