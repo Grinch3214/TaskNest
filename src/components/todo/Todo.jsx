@@ -5,10 +5,10 @@ import TodoList from '../todoList/TodoList';
 
 const Todo = () => {
   const [tasks, setTasks] = useState([
-    { id: 1, title: 'Купить молоко', isDone: false },
-    { id: 2, title: 'Помыть посуду', isDone: true },
-    { id: 3, title: 'Выучить React', isDone: false },
-    { id: 4, title: 'Позвонить другу', isDone: true },
+    { id: crypto?.randomUUID(), title: 'Купить молоко', isDone: false },
+    { id: crypto?.randomUUID(), title: 'Помыть посуду', isDone: true },
+    { id: crypto?.randomUUID(), title: 'Выучить React', isDone: false },
+    { id: crypto?.randomUUID(), title: 'Позвонить другу', isDone: true },
   ]);
 
   const [newTaskTitle, setNewTaskTitle] = useState('');
