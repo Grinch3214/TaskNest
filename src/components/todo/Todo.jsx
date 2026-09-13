@@ -1,17 +1,23 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import TaskForm from '../taskForm/TaskForm';
 import TodoInfo from '../todoInfo/TodoInfo';
 import TodoList from '../todoList/TodoList';
 
 const Todo = () => {
-  const [tasks, setTasks] = useState([
-    { id: crypto?.randomUUID(), title: 'Купить молоко', isDone: false },
-    { id: crypto?.randomUUID(), title: 'Помыть посуду', isDone: true },
-    { id: crypto?.randomUUID(), title: 'Выучить React', isDone: false },
-    { id: crypto?.randomUUID(), title: 'Позвонить другу', isDone: true },
-  ]);
+  const [tasks, setTasks] = useState(() => {
+    console.log('useState');
+    const savedTasks = localStorage.getItem('tasks');
+
+    if (savedTasks) {
+      return JSON.parse(savedTasks);
+    }
+
+    return [];
+  });
 
   const [newTaskTitle, setNewTaskTitle] = useState('');
+
+  const [searchQuery, setSearchQuery] = useState('');
 
   const taskFiltered = tasks.filter(({ isDone }) => isDone);
 
@@ -41,6 +47,7 @@ const Todo = () => {
 
   const filterTask = (query) => {
     console.log(query);
+    setSearchQuery(query);
   };
 
   const addTask = () => {
@@ -53,8 +60,22 @@ const Todo = () => {
 
       setTasks([newTask, ...tasks]);
       setNewTaskTitle('');
+      setSearchQuery('');
     }
   };
+
+  const clearSearchQuery = searchQuery.trim().toLocaleLowerCase();
+  const filteredTask =
+    clearSearchQuery > 0
+      ? tasks.filter(({ title }) =>
+          title.toLocaleLowerCase().includes(clearSearchQuery),
+        )
+      : null;
+
+  useEffect(() => {
+    console.log('useEffect');
+    localStorage.setItem('tasks', JSON.stringify(tasks));
+  }, [tasks]);
 
   return (
     <div className="todo">
@@ -75,6 +96,7 @@ const Todo = () => {
         id="search-task"
         label="Search Task"
         typeInput="search"
+        value={searchQuery}
         onChange={filterTask}
       />
       <TodoInfo
@@ -86,6 +108,7 @@ const Todo = () => {
         tasks={tasks}
         onButtonClick={deleteTask}
         onTaskCompleteChange={toggleTaskComplete}
+        filteredTask={filteredTask}
       />
     </div>
   );
