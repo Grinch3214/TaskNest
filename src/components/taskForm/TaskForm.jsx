@@ -15,6 +15,7 @@ const TaskForm = (props) => {
     onTaskClick,
     onSubmit,
     value,
+    inputRef,
   } = props;
 
   const handleSubmit = (event) => {
@@ -31,6 +32,7 @@ const TaskForm = (props) => {
         type={typeInput}
         value={value}
         onChange={onChange}
+        ref={inputRef}
       />
       {hasButton && (
         <Button

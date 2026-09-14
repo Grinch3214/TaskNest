@@ -1,5 +1,13 @@
 const Field = (props) => {
-  const { className = '', id, label, type = 'text', value, onChange } = props;
+  const {
+    className = '',
+    id,
+    label,
+    type = 'text',
+    value,
+    onChange,
+    ref,
+  } = props;
 
   return (
     <div className={`field ${className}`}>
@@ -14,6 +22,7 @@ const Field = (props) => {
         type={type}
         value={value}
         onInput={(event) => onChange?.(event.target.value)}
+        ref={ref}
       />
     </div>
   );

@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import TaskForm from '../taskForm/TaskForm';
 import TodoInfo from '../todoInfo/TodoInfo';
 import TodoList from '../todoList/TodoList';
@@ -18,6 +18,8 @@ const Todo = () => {
   const [newTaskTitle, setNewTaskTitle] = useState('');
 
   const [searchQuery, setSearchQuery] = useState('');
+
+  const newTaskTitleRef = useRef(null);
 
   const taskFiltered = tasks.filter(({ isDone }) => isDone);
 
@@ -61,6 +63,8 @@ const Todo = () => {
       setTasks([newTask, ...tasks]);
       setNewTaskTitle('');
       setSearchQuery('');
+
+      newTaskTitleRef.current.focus();
     }
   };
 
@@ -77,6 +81,10 @@ const Todo = () => {
     localStorage.setItem('tasks', JSON.stringify(tasks));
   }, [tasks]);
 
+  useEffect(() => {
+    newTaskTitleRef.current.focus();
+  }, []);
+
   return (
     <div className="todo">
       <h1 className="todo__title">To Do List</h1>
@@ -90,6 +98,7 @@ const Todo = () => {
         onSubmit={addTask}
         value={newTaskTitle}
         onChange={setNewTaskTitle}
+        inputRef={newTaskTitleRef}
       />
       <TaskForm
         classInput="todo__field"
