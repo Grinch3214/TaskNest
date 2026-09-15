@@ -16,6 +16,7 @@ const TaskForm = (props) => {
     onSubmit,
     value,
     inputRef,
+    isDisabled,
   } = props;
 
   const handleSubmit = (event) => {
@@ -38,6 +39,7 @@ const TaskForm = (props) => {
         <Button
           className={classButton}
           type={typeButton}
+          isDisabled={isDisabled}
           onButtonClick={onTaskClick}
         >
           {titleButton}

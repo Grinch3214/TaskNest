@@ -1,93 +1,30 @@
-import { useState, useEffect, useRef, useMemo } from 'react';
 import TaskForm from '../taskForm/TaskForm';
 import TodoInfo from '../todoInfo/TodoInfo';
 import TodoList from '../todoList/TodoList';
+import { useTasks } from '../../hooks/useTasks';
+import { useNewTaskForm } from '../../hooks/useNewTaskForm';
+import { useTaskSearch } from '../../hooks/useTaskSearch';
 
 const Todo = () => {
-  const [tasks, setTasks] = useState(() => {
-    console.log('useState');
-    const savedTasks = localStorage.getItem('tasks');
+  const {
+    tasks,
+    taskFiltered,
+    addTask,
+    deleteTask,
+    toggleTaskComplete,
+    deleteAllTasks,
+  } = useTasks();
 
-    if (savedTasks) {
-      return JSON.parse(savedTasks);
-    }
+  const { searchQuery, setSearchQuery, filteredTask } = useTaskSearch(tasks);
 
-    return [];
-  });
+  const { newTaskTitle, setNewTaskTitle, inputRef, isDisabled, submitNewTask } =
+    useNewTaskForm(addTask);
 
-  const [newTaskTitle, setNewTaskTitle] = useState('');
-
-  const [searchQuery, setSearchQuery] = useState('');
-
-  const newTaskTitleRef = useRef(null);
-
-  const taskFiltered = useMemo(() => {
-    return tasks.filter(({ isDone }) => isDone);
-  }, [tasks]);
-
-  const deleteAllTasks = () => {
-    const isConfirmed = confirm('Are you sure you want to delete all tasks?');
-
-    if (isConfirmed) {
-      setTasks([]);
-    }
-  };
-
-  const deleteTask = (taskId) => {
-    setTasks(tasks.filter(({ id }) => id !== taskId));
-  };
-
-  const toggleTaskComplete = (taskId, isDone) => {
-    setTasks(
-      tasks.map((task) => {
-        if (task.id === taskId) {
-          return { ...task, isDone };
-        }
-
-        return task;
-      }),
-    );
-  };
-
-  const filterTask = (query) => {
-    console.log(query);
-    setSearchQuery(query);
-  };
-
-  const addTask = () => {
-    if (newTaskTitle.trim().length > 0) {
-      const newTask = {
-        id: crypto?.randomUUID() ?? Date.now().toString(),
-        title: newTaskTitle,
-        isDone: false,
-      };
-
-      setTasks([newTask, ...tasks]);
-      setNewTaskTitle('');
+  const handleAddTask = () => {
+    if (submitNewTask()) {
       setSearchQuery('');
-
-      newTaskTitleRef.current.focus();
     }
   };
-
-  const filteredTask = useMemo(() => {
-    const clearSearchQuery = searchQuery.trim().toLocaleLowerCase();
-
-    return clearSearchQuery.length > 0
-      ? tasks.filter(({ title }) =>
-          title.toLocaleLowerCase().includes(clearSearchQuery),
-        )
-      : null;
-  }, [searchQuery, tasks]);
-
-  useEffect(() => {
-    console.log('useEffect');
-    localStorage.setItem('tasks', JSON.stringify(tasks));
-  }, [tasks]);
-
-  useEffect(() => {
-    newTaskTitleRef.current.focus();
-  }, []);
 
   return (
     <div className="todo">
@@ -99,10 +36,11 @@ const Todo = () => {
         hasButton
         typeButton="submit"
         titleButton="Add"
-        onSubmit={addTask}
+        onSubmit={handleAddTask}
         value={newTaskTitle}
         onChange={setNewTaskTitle}
-        inputRef={newTaskTitleRef}
+        inputRef={inputRef}
+        isDisabled={isDisabled}
       />
       <TaskForm
         classInput="todo__field"
@@ -110,7 +48,7 @@ const Todo = () => {
         label="Search Task"
         typeInput="search"
         value={searchQuery}
-        onChange={filterTask}
+        onChange={setSearchQuery}
       />
       <TodoInfo
         total={tasks.length}
