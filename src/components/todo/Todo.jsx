@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect, useRef, useMemo } from 'react';
 import TaskForm from '../taskForm/TaskForm';
 import TodoInfo from '../todoInfo/TodoInfo';
 import TodoList from '../todoList/TodoList';
@@ -21,7 +21,9 @@ const Todo = () => {
 
   const newTaskTitleRef = useRef(null);
 
-  const taskFiltered = tasks.filter(({ isDone }) => isDone);
+  const taskFiltered = useMemo(() => {
+    return tasks.filter(({ isDone }) => isDone);
+  }, [tasks]);
 
   const deleteAllTasks = () => {
     const isConfirmed = confirm('Are you sure you want to delete all tasks?');
@@ -68,13 +70,15 @@ const Todo = () => {
     }
   };
 
-  const clearSearchQuery = searchQuery.trim().toLocaleLowerCase();
-  const filteredTask =
-    clearSearchQuery > 0
+  const filteredTask = useMemo(() => {
+    const clearSearchQuery = searchQuery.trim().toLocaleLowerCase();
+
+    return clearSearchQuery.length > 0
       ? tasks.filter(({ title }) =>
           title.toLocaleLowerCase().includes(clearSearchQuery),
         )
       : null;
+  }, [searchQuery, tasks]);
 
   useEffect(() => {
     console.log('useEffect');
