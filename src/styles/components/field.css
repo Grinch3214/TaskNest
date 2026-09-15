@@ -12,11 +12,15 @@
 	&:has(.field__input:focus) .field__label {
 		color: var(--color-primary);
 	}
+
+	&:has(.field__input--invalid) .field__label {
+		color: var(--color-danger);
+	}
 }
 
 .field__label {
 	position: absolute;
-	top: 50%;
+	top: calc(var(--input-height) / 2);
 	left: 17px;
 	color: var(--color-gray-3);
 	translate: 0 -50%;
@@ -52,4 +56,20 @@
 			background-repeat: no-repeat;
 		}
 	}
+
+	&.field__input--invalid {
+		border-color: var(--color-danger);
+
+		&:hover,
+		&:focus {
+			border-color: var(--color-danger);
+		}
+	}
+}
+
+.field__error {
+	display: block;
+	margin-top: 4px;
+	font-size: 12px;
+	color: var(--color-danger);
 }

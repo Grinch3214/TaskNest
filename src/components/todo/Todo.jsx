@@ -17,8 +17,14 @@ const Todo = () => {
 
   const { searchQuery, setSearchQuery, filteredTask } = useTaskSearch(tasks);
 
-  const { newTaskTitle, setNewTaskTitle, inputRef, isDisabled, submitNewTask } =
-    useNewTaskForm(addTask);
+  const {
+    newTaskTitle,
+    inputRef,
+    isDisabled,
+    submitNewTask,
+    handleChange,
+    error,
+  } = useNewTaskForm(addTask);
 
   const handleAddTask = () => {
     if (submitNewTask()) {
@@ -38,9 +44,10 @@ const Todo = () => {
         titleButton="Add"
         onSubmit={handleAddTask}
         value={newTaskTitle}
-        onChange={setNewTaskTitle}
+        onChange={handleChange}
         inputRef={inputRef}
         isDisabled={isDisabled}
+        error={error}
       />
       <TaskForm
         classInput="todo__field"

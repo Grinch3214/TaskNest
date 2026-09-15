@@ -2,9 +2,16 @@ import { useState, useRef, useEffect } from 'react';
 
 export function useNewTaskForm(onAddTask) {
   const [newTaskTitle, setNewTaskTitle] = useState('');
+  const [error, setError] = useState('');
   const inputRef = useRef(null);
 
   const isDisabled = newTaskTitle.trim().length === 0;
+
+  const handleChange = (value) => {
+    console.log(value);
+    setNewTaskTitle(value);
+    setError(value.trim().length === 0 ? 'The task cannot be empty' : '');
+  };
 
   const submitNewTask = () => {
     const title = newTaskTitle.trim();
@@ -15,6 +22,7 @@ export function useNewTaskForm(onAddTask) {
 
     onAddTask(title);
     setNewTaskTitle('');
+    setError('');
     inputRef.current?.focus();
 
     return true;
@@ -30,5 +38,7 @@ export function useNewTaskForm(onAddTask) {
     inputRef,
     isDisabled,
     submitNewTask,
+    error,
+    handleChange,
   };
 }
