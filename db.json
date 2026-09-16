@@ -1,0 +1,40 @@
+{
+  "tasks": [
+    {
+      "title": "1",
+      "isDone": false,
+      "id": "8Kypcaw2Ka4"
+    },
+    {
+      "title": "2",
+      "isDone": true,
+      "id": "J3ncAmS5qEA"
+    },
+    {
+      "title": "3",
+      "isDone": true,
+      "id": "6ltcAJMBpXY"
+    },
+    {
+      "title": "4",
+      "isDone": true,
+      "id": "JOg3DvK_v10"
+    },
+    {
+      "title": "5",
+      "isDone": false,
+      "id": "kZYLpWM4M1Y"
+    },
+    {
+      "title": "6",
+      "isDone": false,
+      "id": "_ZBDFvYn4S8"
+    },
+    {
+      "title": "7",
+      "isDone": false,
+      "id": "_Us0BUUn92k"
+    }
+  ],
+  "$schema": "./node_modules/json-server/schema.json"
+}

@@ -13,7 +13,7 @@
 		color: var(--color-primary);
 	}
 
-	&:has(.field__input--invalid) .field__label {
+	&:has(.field__input.field__input--invalid) .field__label {
 		color: var(--color-danger);
 	}
 }
