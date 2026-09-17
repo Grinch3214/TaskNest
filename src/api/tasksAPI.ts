@@ -1,3 +1,11 @@
+export interface Task {
+  id: string;
+  title: string;
+  isDone: boolean;
+}
+
+export type NewTask = Omit<Task, 'id'>;
+
 const URL = 'http://localhost:3001/tasks';
 
 const headers = {
@@ -5,11 +13,11 @@ const headers = {
 };
 
 const tasksAPI = {
-  getAll() {
+  getAll(): Promise<Task[]> {
     return fetch(`${URL}`).then((res) => res.json());
   },
 
-  add(task) {
+  add(task: NewTask): Promise<Task> {
     return fetch(`${URL}`, {
       method: 'POST',
       headers,
@@ -17,22 +25,17 @@ const tasksAPI = {
     }).then((res) => res.json());
   },
 
-  delete(id) {
+  delete(id: string): Promise<Response> {
     return fetch(`${URL}/${id}`, {
       method: 'DELETE',
     });
   },
 
-  deleteAll(tasks) {
-    return Promise.all(
-      tasks.map(({ id }) => {
-        console.log(this);
-        return this.delete(id);
-      }),
-    );
+  deleteAll(tasks: Task[]): Promise<Response[]> {
+    return Promise.all(tasks.map(({ id }) => this.delete(id)));
   },
 
-  toggleComplete(id, isDone) {
+  toggleComplete(id: string, isDone: boolean): Promise<Response> {
     return fetch(`${URL}/${id}`, {
       method: 'PATCH',
       headers,
