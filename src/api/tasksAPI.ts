@@ -1,10 +1,4 @@
-export interface Task {
-  id: string;
-  title: string;
-  isDone: boolean;
-}
-
-export type NewTask = Omit<Task, 'id'>;
+import type { Task, NewTask } from '../types/task';
 
 const URL = 'http://localhost:3001/tasks';
 
