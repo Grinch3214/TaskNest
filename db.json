@@ -1,11 +1,6 @@
 {
   "tasks": [
     {
-      "title": "1",
-      "isDone": false,
-      "id": "8Kypcaw2Ka4"
-    },
-    {
       "title": "2",
       "isDone": true,
       "id": "J3ncAmS5qEA"
@@ -22,7 +17,7 @@
     },
     {
       "title": "5",
-      "isDone": false,
+      "isDone": true,
       "id": "kZYLpWM4M1Y"
     },
     {
