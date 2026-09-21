@@ -1,4 +1,10 @@
-const IconClose = ({ size = 20, ...props }) => (
+import type { SVGProps } from 'react';
+
+interface IconCloseProps extends SVGProps<SVGSVGElement> {
+  size?: number;
+}
+
+const IconClose = ({ size = 20, ...props }: IconCloseProps) => (
   <svg
     width={size}
     height={size}
