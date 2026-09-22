@@ -1,7 +1,32 @@
+import type {
+  FormEvent,
+  HTMLInputTypeAttribute,
+  MouseEventHandler,
+  ReactNode,
+  Ref,
+} from 'react';
 import Field from '../field/Field';
 import Button from '../button/Button';
 
-const TaskForm = (props) => {
+interface TaskFormProps {
+  id: string;
+  label: string;
+  classInput?: string;
+  typeInput?: HTMLInputTypeAttribute;
+  hasButton?: boolean;
+  typeButton?: 'button' | 'submit' | 'reset';
+  titleButton?: ReactNode;
+  classButton?: string;
+  onChange?: (value: string) => void;
+  onTaskClick?: MouseEventHandler<HTMLButtonElement>;
+  onSubmit?: () => void;
+  value?: string;
+  inputRef?: Ref<HTMLInputElement>;
+  isDisabled?: boolean;
+  error?: string;
+}
+
+const TaskForm = (props: TaskFormProps) => {
   const {
     id,
     label,
@@ -20,7 +45,7 @@ const TaskForm = (props) => {
     error,
   } = props;
 
-  const handleSubmit = (event) => {
+  const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     onSubmit?.();
   };
