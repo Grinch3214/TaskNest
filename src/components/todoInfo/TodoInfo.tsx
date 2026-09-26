@@ -1,4 +1,12 @@
-const TodoInfo = (props) => {
+import type { MouseEventHandler } from 'react';
+
+interface TodoInfoProps {
+  total: number;
+  done: number;
+  onButtonClick?: MouseEventHandler<HTMLButtonElement>;
+}
+
+const TodoInfo = (props: TodoInfoProps) => {
   const { total, done, onButtonClick } = props;
 
   return (
