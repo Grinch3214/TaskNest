@@ -1,6 +1,16 @@
+import type { Task } from '../../types/task';
 import Button from '../button/Button';
 
-const TodoItem = (props) => {
+interface TodoItemProps {
+  className?: string;
+  title: Task['title'];
+  isDone: Task['isDone'];
+  id: Task['id'];
+  onButtonClick?: (id: Task['id']) => void;
+  onTaskCompleteChange: (id: Task['id'], isDone: boolean) => void;
+}
+
+const TodoItem = (props: TodoItemProps) => {
   const {
     className = '',
     title,
@@ -27,7 +37,7 @@ const TodoItem = (props) => {
         className="todo-item__delete-button"
         aria-label="Delete"
         title="Delete"
-        onButtonClick={() => onButtonClick(id)}
+        onButtonClick={() => onButtonClick?.(id)}
       />
     </li>
   );
