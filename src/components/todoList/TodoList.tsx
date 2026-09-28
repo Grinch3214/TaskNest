@@ -1,6 +1,14 @@
+import type { Task } from '../../types/task';
 import TodoItem from '../todoItem/TodoItem';
 
-const TodoList = (props) => {
+interface TodoListProps {
+  tasks?: Task[];
+  onButtonClick?: (id: Task['id']) => void;
+  onTaskCompleteChange: (id: Task['id'], isDone: boolean) => void;
+  filteredTask?: Task[];
+}
+
+const TodoList = (props: TodoListProps) => {
   const {
     tasks = [],
     onButtonClick,
